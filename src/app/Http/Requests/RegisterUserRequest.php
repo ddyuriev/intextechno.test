@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Validation\Validator;
 
 class RegisterUserRequest extends FormRequest
 {

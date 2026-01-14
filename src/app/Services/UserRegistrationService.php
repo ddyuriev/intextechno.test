@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Redis;
 
 class UserRegistrationService
 {
@@ -13,7 +13,7 @@ class UserRegistrationService
 
         Redis::multi();
         Redis::sadd('users', $nickname);
-        Redis::hset("user:$nickname", [
+        Redis::hMSet("user:$nickname", [
             'nickname' => $nickname,
             'avatar' => $path,
             'created_at' => time(),

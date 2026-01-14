@@ -3,14 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Cache;
 
 class RegisterUserTest extends TestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -33,11 +32,11 @@ class RegisterUserTest extends TestCase
                 $rateLimiterPrefixes = [
                     'rate-limiter:',
                     'laravel:rate-limiter:',
-                    config('cache.prefix') . ':rate-limiter:',
+                    config('cache.prefix').':rate-limiter:',
                 ];
 
                 foreach ($rateLimiterPrefixes as $prefix) {
-                    $keys = Redis::keys($prefix . '*');
+                    $keys = Redis::keys($prefix.'*');
                     if ($keys) {
                         Redis::del($keys);
                     }
@@ -50,13 +49,13 @@ class RegisterUserTest extends TestCase
         }
 
         $appPrefix = config('database.redis.options.prefix', 'laravel_database_');
-        $keys = Redis::keys($appPrefix . '*');
+        $keys = Redis::keys($appPrefix.'*');
         if ($keys) {
             Redis::del($keys);
         }
 
         $cachePrefix = config('cache.prefix') ?: 'laravel_cache';
-        $keys = Redis::keys($cachePrefix . '*');
+        $keys = Redis::keys($cachePrefix.'*');
         if ($keys) {
             Redis::del($keys);
         }
@@ -66,7 +65,6 @@ class RegisterUserTest extends TestCase
             Redis::del($key);
         }
     }
-
 
     /** @test */
     public function user_can_register_successfully(): void
@@ -122,7 +120,7 @@ class RegisterUserTest extends TestCase
     {
         for ($i = 0; $i < 5; $i++) {
             $this->postJson('/api/register', [
-                'nickname' => 'user' . $i,
+                'nickname' => 'user'.$i,
                 'avatar' => UploadedFile::fake()->image('avatar.jpg'),
             ])->assertStatus(200);
         }

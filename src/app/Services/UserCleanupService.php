@@ -20,6 +20,7 @@ class UserCleanupService
             if (empty($user)) {
                 Redis::srem('users', $nickname);
                 $removed++;
+
                 continue;
             }
 

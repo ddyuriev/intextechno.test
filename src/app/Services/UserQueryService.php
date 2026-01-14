@@ -19,7 +19,7 @@ class UserQueryService
         foreach ($nicknames as $nickname) {
             $user = Redis::hgetall("user:$nickname");
 
-            if (!empty($user)) {
+            if (! empty($user)) {
                 $users[] = $user;
             }
         }
